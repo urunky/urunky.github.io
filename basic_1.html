@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+	</head>
+	<body>
+		<script src="javascripts/three.min.js"></script>
+		<script>
+			var camera, scene, renderer ;
+			var geometry, geometry2, geometry3 ;
+			var material, matreal2, matreal3 ;
+			var mesh, mesh2, mesh3 ;
+			var controls ;
+
+			scene = new THREE.Scene(); 
+
+			camera = new THREE.PerspectiveCamera( 75, 800/600, 1, 1000 ) ;
+			camera.position.x = 400 ;
+			camera.position.y = 400 ;
+			camera.position.z = 400 ;
+			camera.lookAt( scene.position ) ;
+	
+
+			geometry = new THREE.IcosahedronGeometry( 160, 1 );
+			material = new THREE.MeshBasicMaterial( 
+				{ 
+					color: 0xFF0000, 
+					wireframe:true,
+					wireframeLinewidth:2
+				}
+			) ;
+			mesh = new THREE.Mesh( geometry, material ) ;
+			scene.add( mesh ) ;
+			mesh.position.x = 100 ;
+			mesh.position.y = 100 ;
+
+			geometry2 = new THREE.CubeGeometry( 80, 80, 80 );
+			matreal2 = new THREE.MeshBasicMaterial( 
+				{ 
+					color: 0xFF0000, 
+					wireframe:true,
+					wireframeLinewidth:2
+				}
+			) ;
+			mesh2 = new THREE.Mesh( geometry2, matreal2 ) ;
+			scene.add( mesh2 ) ;
+			mesh2.position.x = 400 ;
+			mesh2.position.y = 200 ;
+
+			geometry3 = new THREE.SphereGeometry( 200, 20, 20 );
+			matreal3 = new THREE.MeshBasicMaterial( 
+				{ 
+					color: 0xFF0000, 
+					wireframe:true,
+					wireframeLinewidth:2
+				}
+			) ;
+			mesh3 = new THREE.Mesh( geometry3, matreal3 ) ;
+			scene.add( mesh3 ) ;
+			mesh3.position.x = -400 ;
+			mesh3.position.y = 200 ;
+
+			var geometry4 = new THREE.PlaneGeometry( 300, 300 ) ;
+			var matreal4 = new THREE.MeshBasicMaterial( 
+				{ 
+					color: 0xFF0000,  
+					side: THREE.DoubleSide 
+				}
+			) ;
+			var mesh4 = new THREE.Mesh( geometry4, matreal4 ) ;
+			scene.add( mesh4 ) ;
+			mesh4.position.z = 200 ;
+
+
+			var geometry5 = new THREE.CircleGeometry( 200, 20 ) ;
+			var matreal5 = new THREE.MeshBasicMaterial( 
+				{ 
+					color: 0xFF0000,  
+					side: THREE.DoubleSide 
+				}
+			) ;
+			var mesh5 = new THREE.Mesh( geometry5, matreal5 ) ;
+			scene.add( mesh5 ) ;
+			mesh5.position.z = 50 ;
+
+			var geometry6 = new THREE.RingGeometry( 100, 200 ) ;
+			var matreal6 = new THREE.MeshBasicMaterial( 
+				{ 
+					color: 0xFF0000,  
+					side: THREE.DoubleSide 
+				}
+			) ;
+			var mesh6 = new THREE.Mesh( geometry6, matreal6 ) ;
+			scene.add( mesh6 ) ;
+			mesh6.position.z = -350 ;
+
+
+			renderer = new THREE.CanvasRenderer() ;
+			renderer.setSize( 800, 600 ) ;
+			document.body.appendChild( renderer.domElement ) ;
+
+			var geo = new THREE.IcosahedronGeometry( 200, 2 ) ;
+			var mate = new THREE.LineBasicMaterial( {color:0xFFFF00} ) ;
+			var mesh = new THREE.Line( geo, mate ) ;
+			scene.add( mesh ) ;
+			mesh.position.z = -350 ;
+
+			animate() ;
+			function animate()
+			{
+				requestAnimationFrame( animate ) ;
+				mesh.rotation.x = Date.now() * 0.00005 ;
+				mesh.rotation.y = Date.now() * 0.0001 ;
+				renderer.render( scene, camera ) ;
+			}
+		</script>
+	</body>
+</html>
