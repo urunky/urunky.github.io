@@ -181,7 +181,7 @@
             void main()
             {
               //  gl_FragColor = u_color ; 
-                gl_FragColor = texture2D( u_image, v_texCoord ) ; //u_color ; // green
+                gl_FragColor = texture2D( u_image, v_texCoord ).bgra ; //u_color ; // green
             }
         </script>
         </head>
