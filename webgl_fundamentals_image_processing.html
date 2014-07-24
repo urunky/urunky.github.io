@@ -22,7 +22,7 @@
             function render( image )
             {
                 var canvas = document.getElementById('canvas') ;
-                var gl = canvas.getContext('experimental-webgl') ;
+                var gl = getWebGLContext( canvas ) ; //canvas.getContext('experimental-webgl') ;
                 if (!gl) return ;
 
                 vertexShader = createShaderFromScriptElement(gl, "2d-vertex-shader");
@@ -58,6 +58,7 @@
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
   
                 var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+                
                 gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
                 
                 // Create a buffer for the position of the rectangle corners.
