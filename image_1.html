@@ -859,60 +859,34 @@ fragmentShader:"precision mediump float;\nuniform lowp int renderType;\nuniform 
 				}
 			) ;
 */
-			var mat1 = new THREE.ShaderMaterial( 
-				{ 
-					color: 0xFF0000
-				}
-			) ;
-
-			var geo = new THREE.Geometry() ;
-			var v1 = new THREE.Vector3( 0,0,0 ) ;
-			var v2 = new THREE.Vector3( 0,100,0 ) ;
-			var v3 = new THREE.Vector3( 0,0,100 ) ;
-
-			geo.vertices = [ v1, v2, v3 ] ;
-
-			var f1 = new THREE.Face3( 0,1,2)  ;
-			geo.faces.push( f1 )
-			geo.computeBoundingSphere() ;
-
-			var mesh = new THREE.Mesh( geo, mat1 ) ;
-			scene.add( mesh ) ;
-			mesh.position.x = 100 ;
-			mesh.position.y = 100 ;
-
-			var v11 = new THREE.Vector2( 0,500) ;
-			var v12 = new THREE.Vector2( 500,500) ;
-			var v13 = new THREE.Vector2( 500,0) ;
-
-			var tri = new THREE.Shape( [ v11,v12,v13] ) ;
-			var g2 = new THREE.ExtrudeGeometry( tri, { bevelEnabled: false, amount: 30 } ) ;
-
-			var mesh2 = new THREE.Mesh( g2, mat1 ) ;
-			scene.add( mesh2 ) ;
-			mesh2.position.x = -100 ;
-			mesh2.position.y = -100 ;
-			mesh2.position.z = -400 ;
-			var opt = { size: 60, height: 40, font:"helvetiker", weight:"bold", style:"normal", bevelEnabled: true} ;
-			var g3 = new THREE.TextGeometry("Hello World", opt) ;
-			var mesh3 = new THREE.Mesh( g3, mat1 ) ;
-			scene.add( mesh3 ) ;
-			mesh3.position.x = -200 ;
-			mesh3.position.y = -200 ;
-
-
-			animate() ;
-			function animate()
+			function onLoad( tex )
 			{
-				requestAnimationFrame( animate ) ;
-				mesh.rotation.x = Date.now() * 0.001 ;
-				mesh.rotation.y = Date.now() * 0.001 ;
+				var geo = new THREE.SphereGeometry( 280, 20, 20 ) ;
+				var mat = new THREE.MeshBasicMaterial( { map:tex, overdraw:true } ) 
+				var mesh = new THREE.Mesh( geo, mat ) ;
+				mesh.rotation.x = 30 * Math.PI / 180 ;
+				scene.add( mesh ) ;
 
-				mesh3.rotation.x = Date.now() * 0.001 ;
-				mesh3.rotation.y = Date.now() * 0.001 ;
+				animate() ;
+				function animate()
+				{
+					requestAnimationFrame( animate ) ;
+					mesh.rotation.x = Date.now() * 0.001 ;
+					mesh.rotation.y = Date.now() * 0.001 ;
 
-				renderer.render( scene, camera ) ;
+	//				mesh3.rotation.x = Date.now() * 0.001 ;
+	//				mesh3.rotation.y = Date.now() * 0.001 ;
+
+					renderer.render( scene, camera ) ;
+				}
+
 			}
+			THREE.ImageUtils.loadTexture('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg', undefined, onLoad ) ;
+			
+
+
+
+		
 			
 		</script>
 	</body>

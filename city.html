@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+	</head>
+	<body>
+		<canvas id='canvas' width='600' height='300'>Canvas not supported</canvas>
+		<script src="javascripts/three.min.js"></script>
+		<script src="https://rawgit.com/mrdoob/three.js/master/examples/fonts/helvetiker_bold.typeface.js"></script>
+		<script>
+			var canvas = document.getElementById('canvas') ;
+			
+			var context = canvas.getContext('2d') ;
+			context.font = '48pt Arial' ;
+			context.fillStyle = 'cornflowerblue' ;
+			context.strokeStyle = 'blue' ;
+			var w = canvas.width * 0.5 - 150 ;
+			var h = canvas.height * 0.5 + 15 ;
+			context.fillText('Hello Canvas', w, h) ;
+			context.strokeText('Hello Canvas', w, h) ;
+
+			document.body.backgroundColor = '#d7f0f7';
+
+			var scene = new THREE.Scene(); 
+
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/ window.innerHeight,  1, 10000 ) ;
+			camera.position.y = 600 ;
+			camera.position.z = 600 ;
+			camera.rotation.x = -45 * Math.PI / 180 ;
+
+			var renderer = new THREE.CanvasRenderer() ;
+			renderer.setSize( window.innerWidth, window.innerHeight ) ;
+			document.body.appendChild( renderer.domElement ) ;
+
+			var light = new THREE.DirectionalLight( 0xf6e86d, 1) ;
+			light.position.set( 1,3,2 ) ;
+	//		scene.add( light ) ;
+
+			var geo_2 = new THREE.PlaneGeometry( 2000, 2000, 20, 20 ) ;
+			var param_2 = {color:0xffcc00, overdraw:true} ;
+			var material_2 = new THREE.MeshBasicMaterial( param_2 )
+			var mesh_2 = new THREE.Mesh( geo_2, material_2 ) ;
+			mesh_2.rotation.x = -90 * Math.PI / 180  ;
+			scene.add( mesh_2 ) ;
+
+			var geo = new THREE.BoxGeometry( 1,1,1 ) ;
+			var mat = new THREE.Matrix4().makeTranslation( 0, 0.5, 0 ) ;
+			geo.applyMatrix( mat ) ;
+
+			var param = { overdraw: true, color:0xff00cc, linewidth:2 } ;
+			var material = new THREE.MeshDepthMaterial( param ) ;
+		//	var material = new THREE.MeshBasicMaterial( param )
+			
+			for ( var i = 0 ; i < 300 ; i++ )
+			{
+
+				var building = new THREE.Mesh( geo.clone(), material.clone() ) ;
+				building.position.x = Math.floor( Math.random() * 200 - 100 ) * 4 ;
+				building.position.z = Math.floor( Math.random() * 200 - 100 ) * 4 ;
+				building.scale.x = Math.random() * 50 + 10 ;
+				building.scale.y = Math.random() * building.scale.x * 8 + 8  ;
+				building.scale.z = building.scale.x ;
+				scene.add( building ) ;
+			}
+
+		
+
+		/*	var mat1 = new THREE.ShaderMaterial( 
+				{ 
+					color: 0xFF0000
+				}
+			) ;
+
+			var geo = new THREE.Geometry() ;
+			var v1 = new THREE.Vector3( 0,0,0 ) ;
+			var v2 = new THREE.Vector3( 0,100,0 ) ;
+			var v3 = new THREE.Vector3( 0,0,100 ) ;
+
+			geo.vertices = [ v1, v2, v3 ] ;
+
+			var f1 = new THREE.Face3( 0,1,2)  ;
+			geo.faces.push( f1 )
+			geo.computeBoundingSphere() ;
+
+			var mesh = new THREE.Mesh( geo, mat1 ) ;
+			scene.add( mesh ) ;
+			mesh.position.x = 100 ;
+			mesh.position.y = 100 ;
+
+			var v11 = new THREE.Vector2( 0,500) ;
+			var v12 = new THREE.Vector2( 500,500) ;
+			var v13 = new THREE.Vector2( 500,0) ;
+
+			var tri = new THREE.Shape( [ v11,v12,v13] ) ;
+			var g2 = new THREE.ExtrudeGeometry( tri, { bevelEnabled: false, amount: 30 } ) ;
+
+			var mesh2 = new THREE.Mesh( g2, mat1 ) ;
+			scene.add( mesh2 ) ;
+			mesh2.position.x = -100 ;
+			mesh2.position.y = -100 ;
+			mesh2.position.z = -400 ;
+			var opt = { size: 60, height: 40, font:"helvetiker", weight:"bold", style:"normal", bevelEnabled: true} ;
+			var g3 = new THREE.TextGeometry("Hello World", opt) ;
+			var mesh3 = new THREE.Mesh( g3, mat1 ) ;
+			scene.add( mesh3 ) ;
+			mesh3.position.x = -200 ;
+			mesh3.position.y = -200 ;
+
+*/
+			animate() ;
+			function animate()
+			{
+				renderer.render( scene, camera ) ;
+				requestAnimationFrame( animate ) ;
+			}
+			
+		</script>
+	</body>
+</html>
