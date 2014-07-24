@@ -15,12 +15,15 @@
                 image.src = "image.PNG" ;
                 image.onload = function()
                 {
+                    alert('b') ;
                     render( image  ) ;
                 }
+                alert('a') ;
             }
             
             function render( image )
             {
+                a
                 console.log('a') ;
                 var canvas = document.getElementById('canvas') ;
                 var gl = canvas.getContext('experimental-webgl') ;
