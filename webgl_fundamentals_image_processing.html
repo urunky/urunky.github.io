@@ -59,7 +59,10 @@
   
                 var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
                 
+                var textureSizeLocation = gl.getUniformLocation(program, "u_textureSize");
+                
                 gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                gl.uniform2f(textureSizeLocation, image.width, image.height);
                 
                 // Create a buffer for the position of the rectangle corners.
                 var buffer = gl.createBuffer();
