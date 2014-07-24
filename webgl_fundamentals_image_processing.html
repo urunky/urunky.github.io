@@ -58,7 +58,6 @@
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
   
                 var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
-                
                 var textureSizeLocation = gl.getUniformLocation(program, "u_textureSize");
                 
                 gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
@@ -177,6 +176,7 @@
             uniform vec4 u_color ;
             
             uniform sampler2D u_image ;
+            uniform vec2 u_textureSize;
             
             varying vec2 v_texCoord ;
             
