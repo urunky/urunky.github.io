@@ -35,7 +35,12 @@
                 
                 var texCoordBuffer = gl.createBuffer() ;
                 gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer );
-                var arr = [ -1.0, -1.0, 1.0, -1.0, -1.0,  1.0, -1.0,  1.0, 1.0, -1.0,1.0,  1.0] ;
+                var arr = [ 0.0, 0.0,
+                           1.0, 0.0,
+                           0.0, 1.0,
+                           0.0, 1.0,
+                           1.0, 0.0,
+                           1.0, 1.0] ;
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array( arr), gl.STATIC_DRAW);
                
                 gl.enableVertexAttribArray(texCoordLocation);
@@ -52,6 +57,20 @@
                 // Upload the image into the texture.
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
   
+                var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+                gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                
+                // Create a buffer for the position of the rectangle corners.
+                var buffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+                gl.enableVertexAttribArray(positionLocation);
+                gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+              
+                // Set a rectangle the same size as the image.
+                setRectangle(gl, 0, 0, image.width, image.height);
+              
+                // Draw the rectangle.
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
             }
             function test() 
             {
@@ -68,8 +87,7 @@
                 
                 var positionLocation = gl.getAttribLocation( program, 'a_position') ;
                 
-                var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
-gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                
 
                 var colorLocation = gl.getUniformLocation( program, "u_color") ;
                 
@@ -134,9 +152,9 @@ gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
         
         <script id="2d-vertex-shader" type="x-shader/x-vertex">
             attribute vec2 a_position ;
-            uniform vec2 u_resolution ;
-            
             attribute vec2 a_texCoord ;
+            
+            uniform vec2 u_resolution ;
             
             varying vec2 v_texCoord ;
             
